@@ -54,7 +54,7 @@ def enhance_bought_items(input_content):
             }
         }
     )
-    return response.output
+    return response.output_text
 
 # Finding best match for each item from Oda
 def find_best_match(receipt_item, oda_products):
@@ -119,8 +119,11 @@ def find_best_match(receipt_item, oda_products):
 def compare_price(receipt_items, oda_items):
     response = client.responses.create(
         model="gpt-4o",
-        input="You are an assistant which helps to compare groecery prices in different stores."
-              "Please compare the prices of the items in the list and tell user which store is cheaper overall."
+        input="You are an assistant which helps to compare grocery prices in different stores."
+              "Please compare the prices of the items in the list and tell user"
+              "how much they would save or overpaid if they would shopped from Oda. "
+              "BE SURE TO DO MATH CORRECT!"
+              "Try to keep answers short"
               "Here is the list of items user bought at different store:\n\n"
               f"{receipt_items}\n\n"
               f"And here is the list of items from Oda:\n\n"

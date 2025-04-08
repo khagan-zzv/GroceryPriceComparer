@@ -31,7 +31,19 @@ def get_oda_prices_for_items(receipt_items):
             for card in product_cards:
                 try:
                     name_el = card.find_element(By.CSS_SELECTOR, "h2")
-                    price_el = card.find_element(By.CSS_SELECTOR, "span")
+                    try:
+                        #if on sale
+                        price_el = card.find_element(
+                            By.CSS_SELECTOR,
+                            "div.k-flex.k-align-items-flex-start.k-flex--gap-0.k-flex--direction-column > span"
+                        )
+                    except:
+                        try:
+                            #regular price
+                            price_el = card.find_element(By.CSS_SELECTOR, "span")
+                        except:
+                            print(f"Skipping item (no price found)")
+                            continue
                     try:
                         description_el = card.find_element(By.CSS_SELECTOR, "p")
                         description = description_el.text.strip()

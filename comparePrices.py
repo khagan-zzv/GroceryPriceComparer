@@ -4,7 +4,7 @@ from usingAI import compare_price
 
 
 def main():
-    image_path = "photo_2025-04-08 13.19.36.jpeg"
+    image_path = "photo_2025-04-08 15.10.53.jpeg"
 
     receipt_items = recieptExtract.get_purchased_items(image_path)
     oda_items = get_oda_prices_for_items(receipt_items)
