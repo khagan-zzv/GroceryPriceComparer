@@ -4,6 +4,7 @@ from openai import OpenAI
 
 client = OpenAI()
 
+
 # Making bought items usable for search
 def enhance_bought_items(input_content):
     response = client.responses.create(
@@ -14,13 +15,15 @@ def enhance_bought_items(input_content):
                 "content": [
                     {
                         "type": "input_text",
-                        "text": "Extract all products and their prices from this receipt file. "
-                                "If there are two of the same product, return price per item."
-                                "If the item has a specific brand name, remove it from the name and add it to details."
-                                "For example XTRA MAISKORN can be just MAISKORN or COOP CHEDDAR REVET can be just CHEDDAR REVET."
-                                "Also items such as FIRKLØVER M/APPELSIN can be just FIRKLØVER with rest added to details."
-                                "If the item has weight or unit, remove it from the name and add to details."
-                                "Skip items such as PANT, PLASTPOSE"
+                        "text": "Extract all products and their prices from this receipt file."
+                                "- If there are multiple quantities of the same product, return the price per item."
+                                "- If the item has a specific brand (e.g. XTRA, COOP, FIRST PRICE), remove the brand from the product name and include it in a separate 'details"''
+                                " field.Example: 'COOP CHEDDAR REVET' → name: 'CHEDDAR REVET', details: 'COOP'"
+                                "- If the item has a flavor, variant, or other secondary description, move that to 'details'."
+                                "Example: 'FIRKLØVER M/APPELSIN' → name: 'FIRKLØVER', details: 'M/APPELSIN' "
+                                "- If the item includes weight or units (e.g. 1.5L, 500g, 6 stk), move that to 'details'."
+                                "- Skip items like 'PANT', 'PLASTPOSE', or anything related to packaging or deposits."
+                                "Return the result as structured data."
                     },
                     input_content,
                 ],
@@ -55,6 +58,7 @@ def enhance_bought_items(input_content):
         }
     )
     return response.output_text
+
 
 # Finding best match for each item from Oda
 def find_best_match(receipt_item, oda_products):
@@ -115,7 +119,7 @@ def find_best_match(receipt_item, oda_products):
     }
 
 
-#Compare prices of what user bought to Oda prices
+# Compare prices of what user bought to Oda prices
 def compare_price(receipt_items, oda_items):
     response = client.responses.create(
         model="gpt-4o",
