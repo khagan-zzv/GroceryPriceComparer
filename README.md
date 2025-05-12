@@ -1,6 +1,7 @@
+{playing around with AI}
 # Groceries Price Comparison (AI Receipt Checker)
 
-This is a side project I built mostly for fun — and to show/learn how AI + web scraping + a bit of logic can be used to solve
+This is a side project I built mostly for fun — and to show/learn how AI + web scraping + a bit of logic can be used to so lve
 something simple but useful: **comparing the prices on your grocery receipt with other stores**.
 
 Right now it works with **Oda.no**, but I'm planning to add support for **Meny.no** as-well since these are the only
